@@ -1,0 +1,94 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}CRM Dashboard{% endblock %}</title>
+
+    <!-- TailwindCSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <style>
+        /* Smooth fade-out transition */
+        .fade-out {
+            transition: opacity 0.5s ease-out;
+            opacity: 1;
+        }
+
+        .fade-out.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+
+    <script>
+        // JavaScript to close message on cross click
+        function closeMessage() {
+            var messageBox = document.getElementById("message-box");
+            if (messageBox) {
+                messageBox.classList.add('hidden');
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    {% if user.is_authenticated %}
+        <!-- Navbar -->
+        <nav class="bg-blue-600 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+                <a href="/crm" class="text-2xl font-bold">CRM</a>
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-gray-200">Home</a></li>
+                    <li><a href="/clients" class="hover:text-gray-200">Clients</a></li>
+                    <li><a href="/tasks" class="hover:text-gray-200">Tasks</a></li>
+                    <li><a href="/reports" class="hover:text-gray-200">Reports</a></li>
+                    <li><a href="{% url 'logout' %}" class="hover:text-gray-200">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    {% endif %}
+
+    <!-- Display success and error messages -->
+    {% if messages %}
+        <div class="container mx-auto mt-4 px-4 fade-out" id="message-box">
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <div class="p-4 mb-4 text-white bg-green-500 rounded relative">
+                        {{ message }}
+                        <!-- Close button (cross) -->
+                        <span onclick="closeMessage()" class="absolute top-0 right-0 p-2 cursor-pointer text-white">&times;</span>
+                    </div>
+                {% elif message.tags == 'error' %}
+                    <div class="p-4 mb-4 text-white bg-red-500 rounded relative">
+                        {{ message }}
+                        <!-- Close button (cross) -->
+                        <span onclick="closeMessage()" class="absolute top-0 right-0 p-2 cursor-pointer text-white">&times;</span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container mx-auto mt-10 px-4">
+        {% block content %}
+        <!-- Content goes here -->
+        {% endblock %}
+    </main>
+
+    {% if user.is_authenticated %}
+        <!-- Footer -->
+        <footer class="bg-blue-600 text-white text-center py-4 mt-10">
+            <p>&copy; 2024 CRM. All rights reserved.</p>
+        </footer>
+    {% endif %}
+
+</body>
+</html>

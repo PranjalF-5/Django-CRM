@@ -28,6 +28,9 @@ urlpatterns = [
     path('contact/', views.contact, name = 'contact'),
     path('about/', views.about , name = 'about'),
     path('Batman/', include('Batman.urls')) , #here we are transfering the control to the Batman app by importing inlcude above 
+
+    path('crm/' ,  include('CRM.urls')),
+
      path("__reload__/", include("django_browser_reload.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
