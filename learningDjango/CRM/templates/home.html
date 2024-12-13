@@ -6,7 +6,7 @@
 <div class="container mx-auto px-4 py-6">
     {% if not user.is_authenticated %}
         <h1 class="text-3xl font-bold text-center text-gray-800">Welcome to CRM</h1>
-        <p class="text-center text-gray-600 mb-6">Please log in to access your dashboard.</p>
+        <p class="text-center text-gray-600 mb-6">Please log in to access your dashboard or register for a new account.</p>
 
         <div class="flex justify-center">
             <form method="post" action="{% url 'home' %}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-sm">
@@ -36,12 +36,21 @@
                         Log In
                     </button>
                     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                        href="{% url 'home' %}">
+                        href="{% url 'password_reset_request' %}">
                         Forgot Password?
                     </a>
                 </div>
             </form>
         </div>
+
+        <div class="text-center mt-4">
+            <p class="text-gray-600">Don't have an account?</p>
+            <br>
+            <a href="{% url 'register_user' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Register Now
+            </a>
+        </div>
+
     {% else %}
         <h1 class="text-3xl font-bold text-center text-gray-800">Welcome back, {{ user.username }}!</h1>
         <p class="text-center text-gray-600">Explore the features of your CRM below:</p>
@@ -58,6 +67,12 @@
             <a href="{% url 'home' %}" class="block bg-gray-100 shadow rounded p-4 text-center hover:bg-gray-200">
                 <h2 class="text-xl font-bold">CRM Dashboard</h2>
                 <p class="text-gray-600">Go to the CRM Dashboard.</p>
+            </a>
+        </div>
+
+        <div class="mt-6 text-center">
+            <a href="{% url 'logout_user' %}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Log Out
             </a>
         </div>
     {% endif %}

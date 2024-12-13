@@ -1,0 +1,99 @@
+{% extends "CRM_base.html" %}
+
+{% block title %}Register - CRM{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-10">
+    <div class="bg-white shadow-lg rounded-lg max-w-lg w-full p-8">
+        <h1 class="text-4xl font-semibold text-gray-800 text-center mb-4">Sign Up</h1>
+        <p class="text-gray-600 text-center mb-6">Create a new account to manage your CRM efficiently.</p>
+
+        <form method="post" action="{% url 'register_user' %}">
+            {% csrf_token %}
+            
+            <!-- Username Field -->
+            <div class="mb-5">
+                <label class="block text-gray-700 text-sm font-medium mb-2" for="username">
+                    Username
+                </label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for error in form.username.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Email Field -->
+            <div class="mb-5">
+                <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
+                    Email
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for error in form.email.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="mb-5">
+                <label class="block text-gray-700 text-sm font-medium mb-2" for="password1">
+                    Password
+                </label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for error in form.password1.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-medium mb-2" for="password2">
+                    Confirm Password
+                </label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {% for error in form.password2.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Register Button -->
+            <div class="flex justify-center">
+                <button
+                    type="submit"
+                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
+                    Register
+                </button>
+            </div>
+        </form>
+
+        <!-- Divider -->
+        <div class="mt-6 border-t border-gray-200"></div>
+        
+        <!-- Log In Link -->
+        <div class="text-center mt-6">
+            <p class="text-sm text-gray-600">Already have an account?</p>
+            <a href="{% url 'home' %}" class="inline-block mt-2">
+                <button
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Log In
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
