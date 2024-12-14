@@ -7,12 +7,13 @@ from django.utils.crypto import get_random_string
 from .forms import UserRegistrationForm, PasswordResetRequestForm
 from .models import OTP
 from django.utils import timezone
-
+from .models import Record
 # Home view for handling both authenticated and unauthenticated users
 def home(request):
     # Check if the user is already authenticated
+    records = Record.objects.all()
     if request.user.is_authenticated:
-        return render(request, 'home.html', {'user': request.user})
+        return render(request, 'home.html', {'user': request.user, 'records':records})
 
     # Handle login for unauthenticated users
     if request.method == "POST":
