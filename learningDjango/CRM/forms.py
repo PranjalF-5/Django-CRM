@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from .models import Record
 
 # Registration Form for User
 class UserRegistrationForm(forms.Form):
@@ -62,3 +63,47 @@ class PasswordResetRequestForm(forms.Form):
 class OTPVerificationForm(forms.Form):
     otp = forms.CharField(max_length=6, required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter OTP'}))
     new_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter new password'}), required=True)
+
+
+
+# Record Form
+
+class RecordForm(forms.ModelForm):
+    class Meta:
+        model = Record  # Link the form to the Record model
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'address']  # Fields to include in the form
+
+        # Optional: Add custom widgets for better input control
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter First Name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Last Name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Email'
+            }),
+            'phone_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter Phone Number'
+            }),
+            'address': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Enter Address'
+            }),
+        }
+
+
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'email': 'Email Address',
+            'phone_number': 'Phone Number',
+            'address': 'Full Address',
+        }
+

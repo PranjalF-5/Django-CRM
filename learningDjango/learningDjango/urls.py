@@ -25,10 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home , name = 'home'),
-    path('contact/', views.contact, name = 'contact'),
-    path('about/', views.about , name = 'about'),
-    path('Batman/', include('Batman.urls')) , #here we are transfering the control to the Batman app by importing inlcude above 
-
+    path('Batman/', include('Batman.urls')) , #here we are transfering the control to the Batman app by importing inlcude above
     path('crm/' ,  include('CRM.urls')),
 
      path("__reload__/", include("django_browser_reload.urls")),

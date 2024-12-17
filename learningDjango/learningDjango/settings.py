@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'CRM',
+    'widget_tweaks',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -158,7 +159,7 @@ NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')  # Cast to integer
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')  # Cast to boolean
+EMAIL_PORT = os.getenv('EMAIL_PORT')   
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')   
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

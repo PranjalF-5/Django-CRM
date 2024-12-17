@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.utils.crypto import get_random_string
-from .forms import UserRegistrationForm, PasswordResetRequestForm
+from .forms import UserRegistrationForm, PasswordResetRequestForm, RecordForm
 from .models import OTP
 from django.utils import timezone
 from .models import Record
@@ -139,3 +139,51 @@ def password_reset_verify(request):
             return redirect('password_reset_verify')
 
     return render(request, 'password_reset_verify.html')
+
+
+
+ #adding the individual customer
+
+def customer_record(request, pk):
+    if request.user.is_authenticated:
+        # Show the record with the primary key
+        customer_record = Record.objects.get(id=pk)  # Use 'pk', not 'id'
+        return render(request, 'record.html', {'customer_record': customer_record})
+    else:
+        messages.error(request,'You must be logged in to view the records')
+        return redirect('home')  # Redirect to login if not authenticated
+
+
+    
+
+#delete Records
+
+def delete_record(request, id):
+    if request.user.is_authenticated:
+            if request.method == 'POST':
+                record = get_object_or_404(Record, id=id)
+                record.delete()
+                messages.success(request, "Record successfully Deleted")
+                return redirect('home')  # Redirect to the home page after deletion
+    else:
+        messages.success("You must be logged in to delete")
+        return redirect('home')
+    
+
+
+# Add new Record
+def new_record(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RecordForm(request.POST)
+            if form.is_valid():
+                form.save()  # Save the form data to the database
+                return redirect('home')  # Redirect after successful submission
+        else:
+            form = RecordForm()
+
+        return render(request, 'new_record.html', {'form': form})
+
+    else:
+        messages.error(request, "Please log in to add records.")
+        return redirect('home') 
